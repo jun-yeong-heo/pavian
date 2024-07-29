@@ -267,7 +267,7 @@ pavianServer <- function(input, output, session) {
         textInput(ns("report_author"), "Author", sprintf("Pavian R package v%s", utils::packageVersion("pavian")), width="100%"),
         textInput(ns("report_date"), "Date", date(), width="100%"),
         checkboxInput(ns("report_include_sankey"),"Include sankey flow charts for each sample", value = TRUE),
-        selectizeInput(ns("report_filter_taxa"), "Filter taxa in sankey", selected=c("Chordata","artificial sequences"), choices=allcontaminants,multiple=TRUE, options(create=TRUE)),
+        selectizeInput(ns("report_filter_taxa"), "Filter taxa in sankey", selected=c("Chordata","artificial sequences"), choices=allcontaminants,multiple=TRUE, options = list(create = TRUE, maxItems = NULL, maxOptions = 10000)),
         footer = tagList(
           modalButton("Cancel"),
           downloadButton("dl_report", "Generate HTML report")
