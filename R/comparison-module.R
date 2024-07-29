@@ -119,7 +119,7 @@ comparisonModuleUI_function <- function(ns) {
             ns('contaminant_selector_clade'),
             allcontaminants, #selected = c("artificial sequences"),
             label = NULL, multiple = TRUE,
-            options = list( maxItems = 10000, create = TRUE, placeholder = 'Filter taxa' ),
+            options = list( maxItems = NULL, maxOptions = 10000, create = TRUE, placeholder = 'Filter taxa' ),
             width = "100%")), 
         div(style="display:inline-block",title="Filter clade of selected taxon (click on a table row, first)",
             actionButton(ns("btn_filter_row"), label=NULL, icon=icon("filter"))),
@@ -172,7 +172,21 @@ comparisonModule <- function(input, output, session, sample_data, tax_data, clad
   })
   
   dt_options <- reactiveValues(search = "", order = NULL, colnames = NULL)
-  
+
+  observe({
+    updateSelectizeInput(session, "contaminant_selector_clade", 
+                         options = list(maxItems = NULL, 
+                                        maxOptions = 10000, 
+                                        create = TRUE))
+  })
+
+  observe({
+    updateSelectizeInput(session, "contaminant_selector", 
+                         options = list(maxItems = NULL, 
+                                        maxOptions = 10000, 
+                                        create = TRUE))
+  })
+	
   get_input <- function(x) {
     ni <- isolate(names(input))
     validate(need(x %in% ni, message = sprintf("Error: Expect %s in input! Available: %s", x, paste0(sort(ni), collapse = ", "))))
